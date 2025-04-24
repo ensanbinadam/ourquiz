@@ -993,6 +993,8 @@ function showResult() {
     const scoreBoard = document.getElementById('scoreBoard');
     const buttonsContainer = document.querySelector('.buttons-container');
     if (quizBox && scoreBoard) {
+        document.getElementById('question').innerHTML = '';
+
         quizBox.style.display = 'none';
         scoreBoard.style.display = 'block';
         buttonsContainer.style.display = 'none';
