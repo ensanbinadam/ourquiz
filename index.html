@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>اختبارات تفاعلية تعليمية</title>
+<!-- إضافة مكتبة KaTeX لدعم المعادلات الرياضية -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 <style>
         /* أنماط التصميم (تم تحسينها) */
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap');
@@ -56,6 +59,17 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
+        
+        /* نمط للخيارات عندما تكون ثلاثة أو أقل - عرض في صف واحد */
+        .options-row {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        @media (max-width: 768px) {
+            .options-row {
+                grid-template-columns: 1fr;
+            }
+        }
 
          .option {
             background: #f8f9fa;
@@ -90,8 +104,9 @@
 
         .controls {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
-            justify-content: space-between;
+            justify-content: center;
             margin-top: 20px;
         }
 
@@ -166,15 +181,15 @@
         }
 
         .reading-text {
-    background: rgba(255, 255, 255, 0.85);
-    color: #1e3c72;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    font-size: 1.2em;
-    line-height: 1.7;
-    font-weight: 500;
-}
+            background: rgba(255, 255, 255, 0.85);
+            color: #1e3c72;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            line-height: 1.7;
+            font-weight: 500;
+        }
 
         .config-btn {
             position: fixed;
@@ -214,6 +229,10 @@
 
             .option {
                 padding: 12px 20px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -322,22 +341,149 @@
             width: 100%;
         }
         
-.option-content img {
-  width: 200px;
-  height: 150px;
-  object-fit: contain;
-  background: #fff; /* خلفية بيضاء للصور الصغيرة */
-  border-radius: 5px;
-  margin: 0 auto;
-  display: block;
-}
+        .option-content img {
+            width: 200px;
+            height: 150px;
+            object-fit: contain;
+            background: #fff; /* خلفية بيضاء للصور الصغيرة */
+            border-radius: 5px;
+            margin: 0 auto;
+            display: block;
+        }
 
-       .option-text {
+        .option-text {
             text-align: center; /* توسيط النص */
             padding: 5px;
             width: 100%;
             font-size: 18px; /* حجم الخط */
             font-weight: bold; /* عريض لجعل النص بارزًا */
+        }
+
+        /* أنماط إضافية للمعادلات الرياضية */
+        .math-container {
+            display: inline-block;
+            margin: 5px 0;
+            padding: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+
+        .katex-display {
+            margin: 0.5em 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 5px;
+        }
+
+        /* تحسين عرض المعادلات في الخيارات */
+        .option .katex {
+            font-size: 1.2em;
+        }
+
+        .option .katex-display {
+            margin: 0;
+        }
+
+        /* تحسين عرض المعادلات في الأسئلة */
+        .question .katex {
+            font-size: 1.3em;
+        }
+        
+        /* تحسين عرض المعادلات على الأجهزة المحمولة */
+        @media (max-width: 768px) {
+            .katex-display {
+                font-size: 0.9em;
+                overflow-x: scroll;
+            }
+            
+            .option .katex {
+                font-size: 1em;
+            }
+        }
+        
+        /* أنماط للأزرار الإضافية */
+        .action-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            display: inline-block;
+            font-size: 1em;
+        }
+        
+        .action-btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .action-btn.sample {
+            background: #28a745;
+        }
+        
+        .action-btn.settings-btn {
+            background: #6c757d;
+        }
+        
+        /* تنسيق منطقة الأزرار */
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* تنسيق الأزرار في صفين عند الحاجة */
+        @media (min-width: 768px) {
+            .buttons-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                grid-gap: 10px;
+            }
+        }
+        
+        .action-btn.sample:hover {
+            background: #218838;
+        }
+
+        /* أنماط لإعدادات العرض */
+        .settings-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .settings-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #2a5298;
+            font-weight: bold;
+        }
+
+        .settings-option {
+            margin-bottom: 10px;
+        }
+
+        .settings-option label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .settings-option select, .settings-option input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
@@ -345,15 +491,41 @@
 <button class="config-btn" onclick="toggleConfigPanel()">⚙️</button>
 <div class="container">
 <div class="header">
-<h1 id="quizTitle">أسئلة تفاعلية تعليمية</h1>
+<h1 id="quizTitle">كويز الثقافة العامة 🇸🇦</h1>
 <p id="instructions">اختر الإجابة الصحيحة لكل سؤال قبل انتهاء الوقت</p>
 </div>
+
+<!-- منطقة الأزرار -->
+<div class="buttons-container">
+    <button class="action-btn" id="loadButton" onclick="loadQuestions()">تحميل الأسئلة</button>
+    <button class="action-btn settings-btn" id="settingsBtn" onclick="toggleSettingsPanel()">⚙️ إعدادات العرض</button>
+</div>
+
+<!-- لوحة الإعدادات (مخفية بشكل افتراضي) -->
+<div class="settings-panel" id="settingsPanel" style="display: none;">
+    <div class="settings-title">إعدادات العرض</div>
+    <div class="settings-option">
+        <label for="numeralType">نوع الأرقام:</label>
+        <select id="numeralType" onchange="changeNumeralType()">
+            <option value="arabic">أرقام عربية (1, 2, 3)</option>
+            <option value="eastern" selected>أرقام هندية شرق أوسطية (١, ٢, ٣)</option>
+        </select>
+    </div>
+    <div class="settings-option">
+        <label for="questionTime">وقت السؤال (بالثواني):</label>
+        <input type="number" id="questionTime" min="5" max="120" value="30" onchange="changeQuestionTime()">
+    </div>
+    <div style="text-align: center; margin-top: 15px;">
+        <button class="nav-btn" onclick="toggleSettingsPanel()">حفظ وإغلاق</button>
+    </div>
+</div>
+
 <div class="counters" id="countersBox">
 <div id="questionCounter">📌 السؤال ٠ من ٠</div>
 <div id="timer">⏳ الوقت المتبقي: ٠ ثانية</div>
 <div id="scoreCounter">🏆 الدرجات: ٠ من ٠</div>
 </div>
-<!-- ✅ الآن أصبح النص القرائي في مكان مستقل -->
+<!-- النص القرائي في مكان مستقل -->
 <div class="reading-text" id="readingText"></div>
 <div class="quiz-box"><div class="question" id="question"></div><div class="options" id="options"></div><div class="controls">
 <button class="nav-btn" disabled="" id="prevBtn" onclick="previousQuestion()">السابق</button>
@@ -380,354 +552,1107 @@
 </div>
 </div>
 <script>
-        const quizConfig = {
-            title: "اسئلة تفاعلية تعليمية 🇸🇦",
-            instructions: "اختر الإجابة الصحيحة لكل سؤال قبل انتهاء الوقت"
+/**
+ * وحدة معالجة المعادلات الرياضية الموحدة المحسنة
+ * تدعم تحويل وعرض المعادلات الرياضية من مختلف الصيغ (LaTeX, MathML, OMML)
+ * مع دعم محسن للكشف عن معادلات LaTeX بدون علامات محددة
+ */
+class UnifiedEquationRenderer {
+    constructor() {
+        // التأكد من تحميل مكتبة KaTeX
+        this.checkKaTeXLoaded();
+        
+        // أنماط الصيغ المختلفة للمعادلات الرياضية
+        this.patterns = {
+            // أنماط LaTeX مع العلامات المحددة
+            latexWithDelimiters: /\\[a-zA-Z]+|\\[^a-zA-Z]|\$\$?.+?\$\$?|\\\[.+?\\\]|\\\(.+?\\\)/,
+            // أنماط LaTeX بدون علامات محددة - تحسين للكشف عن معادلات Word
+            latexWithoutDelimiters: /\\frac\{.+?\}\{.+?\}|\\sqrt\{.+?\}|\\sum_\{.+?\}|\\\w+\{.+?\}|\\[a-zA-Z]+/,
+            mathml: /<(?:math|m:math)[\s>]/i,
+            omml: /<m:oMath|<oMath/i
         };
+        
+        // قائمة بالكلمات المفتاحية الشائعة في LaTeX
+        this.latexKeywords = [
+            '\\frac', '\\sqrt', '\\sum', '\\int', '\\prod', '\\lim', 
+            '\\alpha', '\\beta', '\\gamma', '\\delta', '\\epsilon', '\\zeta', '\\eta', '\\theta',
+            '\\iota', '\\kappa', '\\lambda', '\\mu', '\\nu', '\\xi', '\\pi', '\\rho', '\\sigma',
+            '\\tau', '\\upsilon', '\\phi', '\\chi', '\\psi', '\\omega',
+            '\\Gamma', '\\Delta', '\\Theta', '\\Lambda', '\\Xi', '\\Pi', '\\Sigma', '\\Upsilon',
+            '\\Phi', '\\Psi', '\\Omega',
+            '\\infty', '\\partial', '\\nabla', '\\times', '\\div', '\\cdot', '\\pm', '\\mp',
+            '\\cup', '\\cap', '\\in', '\\notin', '\\subset', '\\supset', '\\emptyset',
+            '\\mathbb', '\\mathcal', '\\mathfrak', '\\mathscr', '\\mathrm', '\\mathbf', '\\mathit',
+            '\\sin', '\\cos', '\\tan', '\\cot', '\\sec', '\\csc', '\\arcsin', '\\arccos', '\\arctan',
+            '\\sinh', '\\cosh', '\\tanh', '\\coth', '\\log', '\\ln', '\\exp',
+            '\\rightarrow', '\\leftarrow', '\\Rightarrow', '\\Leftarrow', '\\leftrightarrow', '\\Leftrightarrow',
+            '\\forall', '\\exists', '\\nexists', '\\therefore', '\\because'
+        ];
+    }
 
-        const state = {
-            currentQuestion: 0,
-            score: 0,
-            timeLeft: 30,
-            timerId: null,
-            isPaused: false,
-            answeredQuestions: [],
-            questions: [] // سيتم تعبئتها من ملف JSON
-        };
+    /**
+     * التأكد من تحميل مكتبة KaTeX
+     */
+    checkKaTeXLoaded() {
+        if (typeof katex === 'undefined') {
+            console.warn('مكتبة KaTeX غير محملة. يرجى تضمين مكتبة KaTeX في الصفحة.');
+            
+            // إضافة مكتبة KaTeX ديناميكياً إذا لم تكن موجودة
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css';
+            document.head.appendChild(link);
+            
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js';
+            document.head.appendChild(script);
+        }
+    }
 
-        function init() {
-            if (!state.questions || state.questions.length === 0) {
-                console.error("لا توجد أسئلة متاحة!");
-                return;
-            }
-
-            state.answeredQuestions = new Array(state.questions.length).fill(false);
-            showQuestion();
+    /**
+     * تحديد نوع صيغة المعادلة الرياضية
+     * @param {string} input - نص المعادلة الرياضية
+     * @returns {string} - نوع الصيغة (latex, mathml, omml, unknown)
+     */
+    detectFormat(input) {
+        if (!input || typeof input !== 'string') {
+            return 'unknown';
         }
 
-        function showQuestion() {
-            clearInterval(state.timerId);
-            state.timeLeft = 30;
-            updateTimerDisplay();
+        // التحقق من صيغة OMML أولاً
+        if (this.patterns.omml.test(input)) {
+            return 'omml';
+        } 
+        
+        // التحقق من صيغة MathML
+        if (this.patterns.mathml.test(input)) {
+            return 'mathml';
+        }
+        
+        // التحقق من صيغة LaTeX مع العلامات المحددة
+        if (this.patterns.latexWithDelimiters.test(input)) {
+            return 'latex';
+        }
+        
+        // التحقق من صيغة LaTeX بدون علامات محددة
+        if (this.patterns.latexWithoutDelimiters.test(input)) {
+            return 'latex';
+        }
 
-            const questionObj = state.questions[state.currentQuestion];
+        // التحقق من وجود كلمات مفتاحية LaTeX
+        for (const keyword of this.latexKeywords) {
+            if (input.includes(keyword)) {
+                return 'latex';
+            }
+        }
 
+        // التحقق من أنماط إضافية للكسور والجذور
+        if (/\\frac\{.*\}\{.*\}/.test(input) || /\\sqrt\{.*\}/.test(input)) {
+            return 'latex';
+        }
+
+        return 'unknown';
+    }
+
+    /**
+     * تحويل OMML إلى MathML
+     * @param {string} omml - نص OMML
+     * @returns {string} - نص MathML
+     */
+    convertOmmlToMathML(omml) {
+        // هذه وظيفة مبسطة للتحويل
+        // في التطبيق الحقيقي، يمكن استخدام مكتبة مثل docx-math-converter
+        
+        // إزالة مساحات الأسماء من OMML لتبسيط التحويل
+        let simplified = omml.replace(/m:/g, '');
+        
+        // تحويل بعض العناصر الشائعة
+        simplified = simplified.replace(/<oMath>(.*?)<\/oMath>/g, '<math>$1</math>');
+        simplified = simplified.replace(/<rad>(.*?)<\/rad>/g, '<msqrt>$1</msqrt>');
+        simplified = simplified.replace(/<deg>(.*?)<\/deg>/g, '<mroot>$1</mroot>');
+        simplified = simplified.replace(/<e>(.*?)<\/e>/g, '<mrow>$1</mrow>');
+        simplified = simplified.replace(/<r>(.*?)<\/r>/g, '<mrow>$1</mrow>');
+        simplified = simplified.replace(/<t>(.*?)<\/t>/g, '<mi>$1</mi>');
+        simplified = simplified.replace(/<f>(.*?)<\/f>/g, '<mfrac>$1</mfrac>');
+        simplified = simplified.replace(/<sSup>(.*?)<\/sSup>/g, '<msup>$1</msup>');
+        
+        return simplified;
+    }
+
+    /**
+     * تحويل MathML إلى LaTeX
+     * @param {string} mathml - نص MathML
+     * @returns {string} - نص LaTeX
+     */
+    convertMathMLToLaTeX(mathml) {
+        // هذه وظيفة مبسطة للتحويل
+        // في التطبيق الحقيقي، يمكن استخدام مكتبة مثل mathjax-node
+        
+        // تحويل بعض العناصر الشائعة
+        let latex = mathml;
+        
+        // تحويل الجذر التربيعي
+        latex = latex.replace(/<msqrt>(.*?)<\/msqrt>/g, '\\sqrt{$1}');
+        
+        // تحويل الكسور
+        latex = latex.replace(/<mfrac><mrow>(.*?)<\/mrow><mrow>(.*?)<\/mrow><\/mfrac>/g, '\\frac{$1}{$2}');
+        
+        // تحويل الأس
+        latex = latex.replace(/<msup><mi>(.*?)<\/mi><mn>(.*?)<\/mn><\/msup>/g, '$1^{$2}');
+        
+        // تحويل المتغيرات
+        latex = latex.replace(/<mi>(.*?)<\/mi>/g, '$1');
+        
+        // تحويل الأرقام
+        latex = latex.replace(/<mn>(.*?)<\/mn>/g, '$1');
+        
+        return latex;
+    }
+
+    /**
+     * تحويل أي صيغة معادلة إلى LaTeX
+     * @param {string} input - نص المعادلة بأي صيغة
+     * @returns {string} - نص LaTeX
+     */
+    convertToLaTeX(input) {
+        const format = this.detectFormat(input);
+        let result;
+        
+        switch (format) {
+            case 'latex':
+                // إضافة علامات محددة إذا لم تكن موجودة
+                if (!input.startsWith('$') && !input.startsWith('\\(') && !input.startsWith('\\[')) {
+                    result = input; // لا نضيف علامات لأن KaTeX سيتعامل معها مباشرة
+                } else {
+                    result = input;
+                }
+                break;
+            case 'mathml':
+                result = this.convertMathMLToLaTeX(input);
+                break;
+            case 'omml':
+                const mathml = this.convertOmmlToMathML(input);
+                result = this.convertMathMLToLaTeX(mathml);
+                break;
+            default:
+                // إذا كان النص غير معروف، نفترض أنه نص عادي
+                result = input;
+        }
+        
+        // تحويل الأرقام إلى الأرقام الهندية الشرق أوسطية إذا كان نوع الأرقام المحدد هو "eastern"
+        if (state.numeralType === 'eastern') {
+            result = this.convertNumbersToEasternArabic(result);
+        }
+        
+        return result;
+    }
+    
+    /**
+     * تحويل الأرقام في نص LaTeX إلى الأرقام الهندية الشرق أوسطية
+     * @param {string} latex - نص LaTeX
+     * @returns {string} - نص LaTeX مع أرقام هندية شرق أوسطية
+     */
+    convertNumbersToEasternArabic(latex) {
+        if (!latex || typeof latex !== 'string') {
+            return latex;
+        }
+        
+        // تحويل الأرقام خارج الأوامر والمعلمات
+        const easternArabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+        
+        // تقسيم النص إلى أجزاء: أوامر LaTeX والنص العادي
+        let result = '';
+        let inCommand = false;
+        let inBraces = 0;
+        let currentToken = '';
+        
+        for (let i = 0; i < latex.length; i++) {
+            const char = latex[i];
             
-const readingDiv = document.getElementById('readingText');
-readingDiv.innerHTML = '';
-if (questionObj.paragraph || questionObj.paragraphImage) {
-    if (questionObj.paragraph) {
-        const paraText = document.createElement('div');
-        paraText.textContent = questionObj.paragraph;
-        readingDiv.appendChild(paraText);
+            // التعامل مع بداية ونهاية الأوامر
+            if (char === '\\' && !inCommand) {
+                // إذا كان هناك نص عادي قبل الأمر، نحول الأرقام فيه
+                if (currentToken) {
+                    result += currentToken.replace(/\d/g, digit => easternArabicNumerals[digit]);
+                    currentToken = '';
+                }
+                inCommand = true;
+                currentToken += char;
+                continue;
+            }
+            
+            // التعامل مع الأقواس
+            if (char === '{') {
+                inBraces++;
+                currentToken += char;
+                continue;
+            }
+            
+            if (char === '}') {
+                inBraces--;
+                currentToken += char;
+                continue;
+            }
+            
+            // إذا كنا في أمر وواجهنا مسافة أو رمز غير حرفي، فقد انتهى الأمر
+            if (inCommand && !/[a-zA-Z]/.test(char) && char !== '\\') {
+                inCommand = false;
+                result += currentToken; // نحتفظ بالأمر كما هو
+                currentToken = '';
+            }
+            
+            // إضافة الحرف الحالي إلى الرمز الحالي
+            currentToken += char;
+            
+            // إذا لم نكن في أمر ولا في أقواس، وواجهنا مسافة، نعالج الرمز الحالي
+            if (!inCommand && inBraces === 0 && /\s/.test(char)) {
+                result += currentToken.replace(/\d/g, digit => easternArabicNumerals[digit]);
+                currentToken = '';
+            }
+        }
+        
+        // معالجة آخر رمز
+        if (currentToken) {
+            if (!inCommand && inBraces === 0) {
+                result += currentToken.replace(/\d/g, digit => easternArabicNumerals[digit]);
+            } else {
+                result += currentToken;
+            }
+        }
+        
+        return result;
     }
-    if (questionObj.paragraphImage) {
-        const paraImg = document.createElement('img');
-        paraImg.src = questionObj.paragraphImage;
-        paraImg.className = 'question-image';
-        readingDiv.appendChild(paraImg);
+
+    /**
+     * عرض المعادلة الرياضية في عنصر HTML
+     * @param {HTMLElement} element - عنصر HTML لعرض المعادلة فيه
+     * @param {string} formula - نص المعادلة بأي صيغة
+     * @param {boolean} displayMode - وضع العرض (true للعرض كمعادلة مستقلة، false للعرض ضمن النص)
+     */
+    renderEquation(element, formula, displayMode = false) {
+        if (!element || !formula) {
+            console.error('يجب توفير عنصر HTML ونص المعادلة');
+            return;
+        }
+
+        try {
+            // تحويل المعادلة إلى LaTeX
+            const latexFormula = this.convertToLaTeX(formula);
+            
+            // عرض المعادلة باستخدام KaTeX
+            katex.render(latexFormula, element, {
+                throwOnError: false,
+                displayMode: displayMode
+            });
+        } catch (error) {
+            console.error('خطأ في عرض المعادلة الرياضية:', error);
+            element.textContent = formula;
+        }
     }
-    readingDiv.style.display = 'block';
-} else {
-    readingDiv.style.display = 'none';
+    
+    /**
+     * إعادة عرض جميع المعادلات عند تغيير نوع الأرقام
+     */
+    refreshAllEquations() {
+        // إعادة عرض معادلة السؤال الحالي إذا وجدت
+        const questionObj = state.questions[state.currentQuestion];
+        if (questionObj) {
+            // إعادة عرض معادلة السؤال
+            if (questionObj.question && questionObj.question.math) {
+                const mathElement = document.querySelector('.question-content .math-container');
+                if (mathElement) {
+                    this.renderEquation(mathElement, questionObj.question.math, true);
+                }
+            }
+            
+            // إعادة عرض معادلات الخيارات
+            if (questionObj.options) {
+                questionObj.options.forEach((option, index) => {
+                    if (option.math) {
+                        const optionMathElements = document.querySelectorAll('.option-content .math-container');
+                        if (optionMathElements[index]) {
+                            this.renderEquation(optionMathElements[index], option.math, false);
+                        }
+                    }
+                    
+                    // إعادة عرض المعادلات في نص الخيار
+                    if (option.text && (option.text.includes('\\') || option.text.includes('$'))) {
+                        const optionTextElements = document.querySelectorAll('.option-content .option-text .math-container');
+                        if (optionTextElements[index]) {
+                            this.renderEquation(optionTextElements[index], option.text, false);
+                        }
+                    }
+                });
+            }
+            
+            // إعادة عرض معادلة النص القرائي إذا وجدت
+            if (questionObj.paragraphMath) {
+                const paraMathElement = document.querySelector('#readingText .math-container');
+                if (paraMathElement) {
+                    this.renderEquation(paraMathElement, questionObj.paragraphMath, true);
+                }
+            }
+        }
+    }
+
+    /**
+     * البحث عن جميع المعادلات في الصفحة وعرضها
+     * @param {string} selector - محدد CSS للعناصر التي تحتوي على معادلات
+     */
+    renderAllEquations(selector = '.math-container') {
+        const elements = document.querySelectorAll(selector);
+        
+        elements.forEach(element => {
+            const formula = element.textContent || element.innerHTML;
+            const displayMode = element.dataset.display === 'block';
+            
+            // تفريغ العنصر قبل عرض المعادلة
+            element.textContent = '';
+            
+            this.renderEquation(element, formula, displayMode);
+        });
+    }
 }
 
-                
+// إنشاء كائن من وحدة معالجة المعادلات الموحدة
+let equationRenderer;
 
-            if (!questionObj || !questionObj.question) {
-                console.error("السؤال غير معرّف بشكل صحيح!");
-                return;
+// التأكد من تحميل وحدة معالجة المعادلات بعد تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    equationRenderer = new UnifiedEquationRenderer();
+});
+
+const quizConfig = {
+    title: "اختبارات تفاعلية تعليمية 🧮",
+    instructions: "اختر الإجابة الصحيحة لكل سؤال قبل انتهاء الوقت"
+};
+
+const state = {
+    currentQuestion: 0,
+    score: 0,
+    timeLeft: 30,
+    timerId: null,
+    isPaused: false,
+    answeredQuestions: [],
+    questions: [], // سيتم تعبئتها من ملف JSON
+    numeralType: 'eastern', // نوع الأرقام: 'arabic' للأرقام العربية، 'eastern' للأرقام الهندية الشرق أوسطية
+    questionTime: 30 // وقت السؤال بالثواني
+};
+
+function init() {
+    if (!state.questions || state.questions.length === 0) {
+        console.error("لا توجد أسئلة متاحة!");
+        return;
+    }
+
+    state.answeredQuestions = new Array(state.questions.length).fill(false);
+    showQuestion();
+}
+
+function showQuestion() {
+    clearInterval(state.timerId);
+    state.timeLeft = state.questionTime;
+    updateTimerDisplay();
+
+    const questionObj = state.questions[state.currentQuestion];
+
+    // عرض النص القرائي إذا كان موجودًا
+    const readingDiv = document.getElementById('readingText');
+    readingDiv.innerHTML = '';
+    if (questionObj.paragraph || questionObj.paragraphImage || questionObj.paragraphMath) {
+        if (questionObj.paragraph) {
+            const paraText = document.createElement('div');
+            // تحويل الأرقام في النص القرائي إلى النوع المحدد
+            paraText.textContent = convertTextNumerals(questionObj.paragraph);
+            readingDiv.appendChild(paraText);
+        }
+        if (questionObj.paragraphImage) {
+            const paraImg = document.createElement('img');
+            paraImg.src = questionObj.paragraphImage;
+            paraImg.className = 'question-image';
+            readingDiv.appendChild(paraImg);
+        }
+        // إضافة دعم للمعادلات الرياضية في النص القرائي
+        if (questionObj.paragraphMath) {
+            const paraMath = document.createElement('div');
+            paraMath.className = 'math-container';
+            readingDiv.appendChild(paraMath);
             
-            }
+            // استخدام وحدة معالجة المعادلات الموحدة
+            equationRenderer.renderEquation(paraMath, questionObj.paragraphMath, true);
+        }
+        readingDiv.style.display = 'block';
+    } else {
+        readingDiv.style.display = 'none';
+    }
 
-            const questionElement = document.getElementById('question');
-            const optionsElement = document.getElementById('options');
+    if (!questionObj || !questionObj.question) {
+        console.error("السؤال غير معرّف بشكل صحيح!");
+        return;
+    }
 
-            questionElement.innerHTML = '';
-            const questionContent = document.createElement('div');
-            questionContent.className = 'question-content';
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
 
-            if (questionObj.question.text) {
-                const textElement = document.createElement('div');
-                textElement.textContent = questionObj.question.text;
-                questionContent.appendChild(textElement);
-            }
+    questionElement.innerHTML = '';
+    const questionContent = document.createElement('div');
+    questionContent.className = 'question-content';
 
-            if (questionObj.question.image) {
-                const imgElement = document.createElement('img');
-                imgElement.src = questionObj.question.image;
-                imgElement.className = 'question-image';
-                questionContent.appendChild(imgElement);
-            }
+    // عرض نص السؤال
+    if (questionObj.question.text) {
+        const textElement = document.createElement('div');
+        // تحويل الأرقام في نص السؤال إلى النوع المحدد
+        textElement.textContent = convertTextNumerals(questionObj.question.text);
+        questionContent.appendChild(textElement);
+    }
 
-            questionElement.appendChild(questionContent);
+    // عرض معادلة رياضية في السؤال إذا كانت موجودة
+    if (questionObj.question.math) {
+        const mathElement = document.createElement('div');
+        mathElement.className = 'math-container';
+        questionContent.appendChild(mathElement);
+        
+        // استخدام وحدة معالجة المعادلات الموحدة
+        equationRenderer.renderEquation(mathElement, questionObj.question.math, true);
+    }
 
-            optionsElement.innerHTML = '';
-            if (!questionObj.options || questionObj.options.length === 0) {
-                console.error("لا توجد خيارات متاحة لهذا السؤال!");
-                return;
-            }
+    // عرض صورة السؤال إذا كانت موجودة
+    if (questionObj.question.image) {
+        const imgElement = document.createElement('img');
+        imgElement.src = questionObj.question.image;
+        imgElement.className = 'question-image';
+        questionContent.appendChild(imgElement);
+    }
 
-            questionObj.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
+    questionElement.appendChild(questionContent);
 
-                const optionContent = document.createElement('div');
-                optionContent.className = 'option-content';
+    optionsElement.innerHTML = '';
+    if (!questionObj.options || questionObj.options.length === 0) {
+        console.error("لا توجد خيارات متاحة لهذا السؤال!");
+        return;
+    }
 
-                if (option.image) {
-                    const img = document.createElement('img');
-                    img.src = option.image;
-                    img.className = 'option-image';
-                     // إضافة غلاف للصورة للتحكم الأفضل
-                    const imageContainer = document.createElement('div');
-                    imageContainer.style.width = '200px';
-                    imageContainer.style.height = '150px';
-                    imageContainer.style.overflow = 'hidden';
-                    imageContainer.style.borderRadius = '5px';
-                    optionContent.appendChild(img);
-                }
+    // تجميع الخيارات غير الفارغة
+    const validOptions = [];
+    const optionIndices = [];
+    
+    questionObj.options.forEach((option, index) => {
+        // التحقق مما إذا كان الخيار فارغًا (لا يحتوي على نص أو صورة أو معادلة رياضية)
+        if (!option.text && !option.image && !option.math) {
+            return; // تخطي الخيارات الفارغة
+        }
+        
+        const optionElement = document.createElement('div');
+        optionElement.className = 'option';
+        optionElement.dataset.originalIndex = index; // حفظ الفهرس الأصلي للخيار
 
-                if (option.text) {
-                    const text = document.createElement('span');
-                    text.textContent = option.text;
-                    text.className = 'option-text';
-                    optionContent.appendChild(text);
-                }
+        const optionContent = document.createElement('div');
+        optionContent.className = 'option-content';
 
-                optionElement.appendChild(optionContent);
-                optionsElement.appendChild(optionElement);
-
-
-                if (state.answeredQuestions[state.currentQuestion]) {
-                    optionElement.style.pointerEvents = 'none';
-                    if (index === questionObj.correct) {
-                        optionElement.classList.add('correct');
-                    }
-                }
-
-                optionElement.onclick = () => {
-                    checkAnswer(index);
-                };
-
-                optionsElement.appendChild(optionElement);
-            });
-
-            document.getElementById('prevBtn').disabled = state.currentQuestion === 0;
-            document.getElementById('nextBtn').disabled = false;
-
-            document.getElementById('progress').style.width =
-                `${(state.currentQuestion / state.questions.length) * 100}%`;
-
-            updateQuestionCounter();
-            updateScoreCounter();
-            startTimer();
+        // عرض صورة الخيار إذا كانت موجودة
+        if (option.image) {
+            const img = document.createElement('img');
+            img.src = option.image;
+            img.className = 'option-image';
+            optionContent.appendChild(img);
         }
 
-        function startTimer() {
-            state.timerId = setInterval(() => {
-                if (!state.isPaused) {
-                    state.timeLeft--;
-                    updateTimerDisplay();
-                    if (state.timeLeft <= 0) {
-                        clearInterval(state.timerId);
-                        nextQuestion();
-                    }
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            document.getElementById('timer').textContent =
-                `الوقت المتبقي: ${toArabicNumbers(state.timeLeft)} ثانية`;
-        }
-
-        function checkAnswer(selectedIndex) {
-            const options = document.querySelectorAll('.option');
-            const correctIndex = state.questions[state.currentQuestion].correct;
-
-            if (state.answeredQuestions[state.currentQuestion]) return;
-
-            options.forEach(option => option.style.pointerEvents = 'none');
-
-            options[correctIndex].classList.add('correct');
-
-            if (selectedIndex === correctIndex) {
-                state.score++;
-                state.answeredQuestions[state.currentQuestion] = true;
-                updateScoreCounter();
+        // عرض نص الخيار
+        if (option.text) {
+            const text = document.createElement('span');
+            text.className = 'option-text';
+            
+            // التحقق مما إذا كان النص يحتوي على معادلة رياضية
+            if (option.text.includes('\\') || option.text.includes('$')) {
+                const mathElement = document.createElement('div');
+                mathElement.className = 'math-container';
+                text.appendChild(mathElement);
+                
+                // استخدام وحدة معالجة المعادلات الموحدة
+                equationRenderer.renderEquation(mathElement, option.text, false);
             } else {
-                options[selectedIndex].classList.add('wrong');
+                // تحويل الأرقام في نص الخيار إلى النوع المحدد
+                text.textContent = convertTextNumerals(option.text);
             }
+            
+            optionContent.appendChild(text);
+        }
 
+        // عرض معادلة رياضية في الخيار إذا كانت موجودة
+        if (option.math) {
+            const mathElement = document.createElement('div');
+            mathElement.className = 'math-container';
+            optionContent.appendChild(mathElement);
+            
+            // استخدام وحدة معالجة المعادلات الموحدة
+            equationRenderer.renderEquation(mathElement, option.math, false);
+        }
+
+        optionElement.appendChild(optionContent);
+        
+        // إضافة الخيار الصالح إلى المصفوفة
+        validOptions.push(optionElement);
+        optionIndices.push(index);
+    });
+    
+    // تعديل نمط العرض بناءً على عدد الخيارات الصالحة
+    if (validOptions.length <= 3) {
+        optionsElement.classList.add('options-row');
+    } else {
+        optionsElement.classList.remove('options-row');
+    }
+    
+    // إضافة الخيارات الصالحة إلى العنصر الأب
+    validOptions.forEach((optionElement, i) => {
+        const originalIndex = optionIndices[i];
+        
+        if (state.answeredQuestions[state.currentQuestion]) {
+            optionElement.style.pointerEvents = 'none';
+            if (originalIndex === questionObj.correct) {
+                optionElement.classList.add('correct');
+            }
+        }
+
+        optionElement.onclick = () => {
+            checkAnswer(originalIndex);
+        };
+
+        optionsElement.appendChild(optionElement);
+    });
+
+    document.getElementById('prevBtn').disabled = state.currentQuestion === 0;
+    document.getElementById('nextBtn').disabled = false;
+
+    document.getElementById('progress').style.width =
+        `${(state.currentQuestion / state.questions.length) * 100}%`;
+
+    updateQuestionCounter();
+    updateScoreCounter();
+    startTimer();
+}
+
+function startTimer() {
+    state.timerId = setInterval(() => {
+        if (!state.isPaused) {
+            state.timeLeft--;
+            updateTimerDisplay();
+            if (state.timeLeft <= 0) {
+                clearInterval(state.timerId);
+                nextQuestion();
+            }
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    document.getElementById('timer').textContent =
+        `الوقت المتبقي: ${convertToSelectedNumerals(state.timeLeft)} ثانية`;
+}
+
+function checkAnswer(selectedIndex) {
+    const options = document.querySelectorAll('.option');
+    const correctIndex = state.questions[state.currentQuestion].correct;
+
+    if (state.answeredQuestions[state.currentQuestion]) return;
+
+    options.forEach(option => option.style.pointerEvents = 'none');
+
+    options[correctIndex].classList.add('correct');
+
+    if (selectedIndex === correctIndex) {
+        state.score++;
+        state.answeredQuestions[state.currentQuestion] = true;
+        updateScoreCounter();
+    } else {
+        options[selectedIndex].classList.add('wrong');
+    }
+
+    if (state.currentQuestion < state.questions.length - 1) {
+        setTimeout(() => {
             if (state.currentQuestion < state.questions.length - 1) {
-                setTimeout(() => {
-        if (state.currentQuestion < state.questions.length - 1) {
-            nextQuestion();
-        } else {
-            showResult();
-        }
-    }, 1500);
+                nextQuestion();
             } else {
-                setTimeout(showResult, 1500);
+                showResult();
             }
-        }
+        }, 1500);
+    } else {
+        setTimeout(showResult, 1500);
+    }
+}
 
-        function nextQuestion() {
+function nextQuestion() {
     if (state.currentQuestion >= state.questions.length - 1) {
         showResult();
         return;
     }
-            if (state.currentQuestion < state.questions.length - 1) {
-                state.currentQuestion++;
-                showQuestion();
-            } else {
-                showResult();
+    if (state.currentQuestion < state.questions.length - 1) {
+        state.currentQuestion++;
+        showQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function previousQuestion() {
+    if (state.currentQuestion > 0) {
+        state.currentQuestion--;
+        showQuestion();
+    }
+    document.getElementById('nextBtn').disabled = false;
+}
+
+function showResult() {
+    const quizBox = document.querySelector('.quiz-box');
+    const scoreBoard = document.getElementById('scoreBoard');
+    const buttonsContainer = document.querySelector('.buttons-container');
+
+    if (quizBox && scoreBoard) {
+        quizBox.style.display = 'none';
+        scoreBoard.style.display = 'block';
+        buttonsContainer.style.display = 'none';
+        document.getElementById('readingText').style.display = 'none';
+        document.getElementById('countersBox').style.display = 'none';
+        document.getElementById('finalScore').textContent = convertToSelectedNumerals(state.score);
+        document.getElementById('totalQuestions').textContent = convertToSelectedNumerals(state.questions.length);
+    } else {
+        console.error('عناصر النتيجة غير موجودة في الصفحة');
+    }
+}
+
+function restartQuiz() {
+    state.currentQuestion = 0;
+    state.score = 0;
+    state.timeLeft = state.questionTime;
+    state.answeredQuestions.fill(false);
+    document.querySelector('.quiz-box').style.display = 'block';
+    document.getElementById('scoreBoard').style.display = 'none';
+    document.querySelector('.buttons-container').style.display = 'flex';
+    document.getElementById('countersBox').style.display = 'flex';
+    document.getElementById('progress').style.width = '0%';
+    document.querySelectorAll('.option').forEach(option => {
+        option.classList.remove('correct', 'wrong');
+        option.style.pointerEvents = 'auto';
+    });
+    showQuestion();
+}
+
+function togglePause() {
+    state.isPaused = !state.isPaused;
+    const btn = document.getElementById('pauseBtn');
+    btn.textContent = state.isPaused ? 'استئناف' : 'توقف';
+    btn.style.background = state.isPaused ? '#28a745' : '#ffc107';
+}
+
+/**
+ * تبديل عرض لوحة الإعدادات
+ */
+function toggleSettingsPanel() {
+    const panel = document.getElementById('settingsPanel');
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+    } else {
+        panel.style.display = 'block';
+    }
+}
+
+function toggleConfigPanel() {
+    const panel = document.getElementById('configPanel');
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+    } else {
+        panel.style.display = 'block';
+        document.getElementById('titleInput').value = quizConfig.title;
+        document.getElementById('instructionsInput').value = quizConfig.instructions;
+    }
+}
+
+function saveConfig() {
+    const newTitle = document.getElementById('titleInput').value;
+    const newInstructions = document.getElementById('instructionsInput').value;
+
+    if (newTitle) {
+        quizConfig.title = newTitle;
+        document.getElementById('quizTitle').textContent = newTitle;
+    }
+
+    if (newInstructions) {
+        quizConfig.instructions = newInstructions;
+        document.getElementById('instructions').textContent = newInstructions;
+    }
+
+    toggleConfigPanel();
+}
+
+/**
+ * تحويل الأرقام إلى النوع المحدد (عربية أو هندية شرق أوسطية)
+ * @param {number} num - الرقم المراد تحويله
+ * @returns {string} - الرقم بعد التحويل
+ */
+function convertToSelectedNumerals(num) {
+    if (num === undefined || num === null) {
+        return state.numeralType === 'eastern' ? "٠" : "0";
+    }
+    
+    if (state.numeralType === 'eastern') {
+        return toEasternArabicNumerals(num);
+    } else {
+        return num.toString();
+    }
+}
+
+/**
+ * تحويل الأرقام في النص إلى النوع المحدد (عربية أو هندية شرق أوسطية)
+ * @param {string} text - النص المراد تحويل أرقامه
+ * @returns {string} - النص بعد تحويل الأرقام
+ */
+function convertTextNumerals(text) {
+    if (!text || typeof text !== 'string') {
+        return text;
+    }
+    
+    // تجاهل النصوص التي تحتوي على معادلات رياضية
+    if (text.includes('\\') || text.includes('$')) {
+        return text;
+    }
+    
+    if (state.numeralType === 'eastern') {
+        return text.replace(/\d/g, digit => {
+            const easternArabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return easternArabicNumerals[digit];
+        });
+    } else {
+        return text;
+    }
+}
+
+/**
+ * تحويل الأرقام إلى أرقام هندية شرق أوسطية
+ * @param {number} num - الرقم المراد تحويله
+ * @returns {string} - الرقم بالأرقام الهندية الشرق أوسطية
+ */
+function toEasternArabicNumerals(num) {
+    const easternArabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    return num.toString().replace(/\d/g, digit => easternArabicNumerals[digit]);
+}
+
+/**
+ * تغيير نوع الأرقام المستخدمة في التطبيق
+ */
+function changeNumeralType() {
+    const numeralType = document.getElementById('numeralType').value;
+    state.numeralType = numeralType;
+    
+    // تحديث جميع العناصر التي تحتوي على أرقام
+    updateQuestionCounter();
+    updateScoreCounter();
+    updateTimerDisplay();
+    
+    // إعادة عرض المعادلات الرياضية بنوع الأرقام الجديد
+    if (equationRenderer) {
+        equationRenderer.refreshAllEquations();
+    }
+    
+    // إعادة عرض السؤال الحالي لتحديث الأرقام في محتوى الأسئلة والخيارات
+    if (state.questions && state.questions.length > 0) {
+        showQuestion();
+    }
+}
+
+/**
+ * تغيير وقت السؤال
+ */
+function changeQuestionTime() {
+    const questionTime = parseInt(document.getElementById('questionTime').value);
+    if (questionTime >= 5 && questionTime <= 120) {
+        state.questionTime = questionTime;
+        state.timeLeft = questionTime;
+        updateTimerDisplay();
+    }
+}
+
+function updateQuestionCounter() {
+    document.getElementById('questionCounter').textContent =
+        `السؤال ${convertToSelectedNumerals(state.currentQuestion + 1)} من ${convertToSelectedNumerals(state.questions.length)}`;
+}
+
+function updateScoreCounter() {
+    document.getElementById('scoreCounter').textContent =
+        `الدرجات: ${convertToSelectedNumerals(state.score)} من ${convertToSelectedNumerals(state.questions.length)}`;
+}
+
+/**
+ * وظيفة معالجة المعادلات الرياضية في الأسئلة المحملة
+ * تم تحسينها للتعرف على معادلات LaTeX بدون علامات محددة
+ * @param {Array} questions - مصفوفة الأسئلة
+ */
+function processEquationsInQuestions(questions) {
+    if (!questions || !Array.isArray(questions)) return;
+    
+    // أنماط للكشف عن المعادلات الرياضية بمختلف الصيغ
+    const mathPatterns = {
+        // أنماط LaTeX مع العلامات المحددة
+        latexWithDelimiters: /\\\(.+?\\\)|\\\[.+?\\\]|\$\$.+?\$\$|\$.+?\$/gs,
+        // أنماط LaTeX بدون علامات محددة - تحسين للكشف عن معادلات Word
+        latexWithoutDelimiters: /\\frac\{.+?\}\{.+?\}|\\sqrt\{.+?\}|\\sum_\{.+?\}|\\\w+\{.+?\}/gs,
+        // أنماط MathML و OMML
+        mathml: /<math.+?<\/math>/gs,
+        omml: /<m:oMath.+?<\/m:oMath>|<oMath.+?<\/oMath>/gs
+    };
+    
+    // قائمة بالكلمات المفتاحية الشائعة في LaTeX
+    const latexKeywords = [
+        '\\frac', '\\sqrt', '\\sum', '\\int', '\\prod', '\\lim', 
+        '\\alpha', '\\beta', '\\gamma', '\\delta', '\\epsilon', '\\zeta', '\\eta', '\\theta',
+        '\\iota', '\\kappa', '\\lambda', '\\mu', '\\nu', '\\xi', '\\pi', '\\rho', '\\sigma',
+        '\\tau', '\\upsilon', '\\phi', '\\chi', '\\psi', '\\omega'
+    ];
+    
+    questions.forEach(question => {
+        // معالجة المعادلات في نص السؤال
+        if (question.question) {
+            if (typeof question.question === 'string') {
+                // تحويل السؤال البسيط إلى كائن
+                const text = question.question;
+                question.question = { text: text };
+            }
+            
+            // البحث عن المعادلات في نص السؤال
+            if (question.question.text) {
+                // البحث عن المعادلات بالعلامات المحددة
+                let matches = question.question.text.match(mathPatterns.latexWithDelimiters);
+                
+                // إذا لم نجد معادلات بالعلامات المحددة، نبحث عن معادلات بدون علامات
+                if (!matches) {
+                    matches = question.question.text.match(mathPatterns.latexWithoutDelimiters);
+                }
+                
+                // إذا لم نجد معادلات بالأنماط، نبحث عن الكلمات المفتاحية
+                if (!matches) {
+                    for (const keyword of latexKeywords) {
+                        if (question.question.text.includes(keyword)) {
+                            // إذا وجدنا كلمة مفتاحية، نعتبر النص كله معادلة
+                            matches = [question.question.text];
+                            break;
+                        }
+                    }
+                }
+                
+                // البحث عن MathML و OMML
+                if (!matches) {
+                    matches = question.question.text.match(mathPatterns.mathml) || 
+                              question.question.text.match(mathPatterns.omml);
+                }
+                
+                if (matches && matches.length > 0) {
+                    // إذا وجدت معادلة، انقلها إلى حقل math
+                    question.question.math = matches[0];
+                    // احذف المعادلة من النص الأصلي
+                    question.question.text = question.question.text.replace(matches[0], '').trim();
+                }
             }
         }
-
-        function previousQuestion() {
-            if (state.currentQuestion > 0) {
-                state.currentQuestion--;
-                showQuestion();
-            }
-            document.getElementById('nextBtn').disabled = false;
-        }
-
-      function showResult() {
-            const quizBox = document.querySelector('.quiz-box');
-            const scoreBoard = document.getElementById('scoreBoard');
-
-            if (quizBox && scoreBoard) {
-                quizBox.style.display = 'none';
-                scoreBoard.style.display = 'block';
-                document.getElementById('loadButton').style.display = 'none';
-                document.getElementById('readingText').style.display = 'none';
-                document.getElementById('countersBox').style.display = 'none'; // ✅ هذا هو المطلوب
-                document.getElementById('finalScore').textContent = toArabicNumbers(state.score);
-                document.getElementById('totalQuestions').textContent = toArabicNumbers(state.questions.length);
-            } else {
-                console.error('عناصر النتيجة غير موجودة في الصفحة');
-            }
-        }
-
-        function restartQuiz() {
-            state.currentQuestion = 0;
-            state.score = 0;
-            state.timeLeft = 30;
-            state.answeredQuestions.fill(false);
-            document.querySelector('.quiz-box').style.display = 'block';
-            document.getElementById('scoreBoard').style.display = 'none';
-            document.getElementById('loadButton').style.display = 'block';
-            document.getElementById('countersBox').style.display = 'flex';
-            document.getElementById('progress').style.width = '0%';
-            document.querySelectorAll('.option').forEach(option => {
-                option.classList.remove('correct', 'wrong');
-                option.style.pointerEvents = 'auto';
-            document.getElementById('countersBox').style.display = 'flex';
+        
+        // معالجة المعادلات في الخيارات
+        if (question.options && Array.isArray(question.options)) {
+            question.options.forEach((option, index) => {
+                if (typeof option === 'string') {
+                    // تحويل الخيار البسيط إلى كائن
+                    const text = option;
+                    question.options[index] = { text: text };
+                    option = question.options[index];
+                }
+                
+                // البحث عن المعادلات في نص الخيار
+                if (option.text) {
+                    // البحث عن المعادلات بالعلامات المحددة
+                    let matches = option.text.match(mathPatterns.latexWithDelimiters);
+                    
+                    // إذا لم نجد معادلات بالعلامات المحددة، نبحث عن معادلات بدون علامات
+                    if (!matches) {
+                        matches = option.text.match(mathPatterns.latexWithoutDelimiters);
+                    }
+                    
+                    // إذا لم نجد معادلات بالأنماط، نبحث عن الكلمات المفتاحية
+                    if (!matches) {
+                        for (const keyword of latexKeywords) {
+                            if (option.text.includes(keyword)) {
+                                // إذا وجدنا كلمة مفتاحية، نعتبر النص كله معادلة
+                                matches = [option.text];
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // البحث عن MathML و OMML
+                    if (!matches) {
+                        matches = option.text.match(mathPatterns.mathml) || 
+                                  option.text.match(mathPatterns.omml);
+                    }
+                    
+                    if (matches && matches.length > 0) {
+                        // إذا وجدت معادلة، انقلها إلى حقل math
+                        option.math = matches[0];
+                        // احذف المعادلة من النص الأصلي
+                        option.text = option.text.replace(matches[0], '').trim();
+                    }
+                }
             });
-            showQuestion();
         }
-
-        function togglePause() {
-            state.isPaused = !state.isPaused;
-            const btn = document.getElementById('pauseBtn');
-            btn.textContent = state.isPaused ? 'استئناف' : 'توقف';
-            btn.style.background = state.isPaused ? '#28a745' : '#ffc107';
-        }
-
-        function toggleConfigPanel() {
-            const panel = document.getElementById('configPanel');
-            if (panel.style.display === 'block') {
-                panel.style.display = 'none';
-            } else {
-                panel.style.display = 'block';
-                document.getElementById('titleInput').value = quizConfig.title;
-                document.getElementById('instructionsInput').value = quizConfig.instructions;
+        
+        // معالجة المعادلات في النص القرائي
+        if (question.paragraph) {
+            // البحث عن المعادلات بالعلامات المحددة
+            let matches = question.paragraph.match(mathPatterns.latexWithDelimiters);
+            
+            // إذا لم نجد معادلات بالعلامات المحددة، نبحث عن معادلات بدون علامات
+            if (!matches) {
+                matches = question.paragraph.match(mathPatterns.latexWithoutDelimiters);
+            }
+            
+            // إذا لم نجد معادلات بالأنماط، نبحث عن الكلمات المفتاحية
+            if (!matches) {
+                for (const keyword of latexKeywords) {
+                    if (question.paragraph.includes(keyword)) {
+                        // إذا وجدنا كلمة مفتاحية، نعتبر النص كله معادلة
+                        matches = [question.paragraph];
+                        break;
+                    }
+                }
+            }
+            
+            // البحث عن MathML و OMML
+            if (!matches) {
+                matches = question.paragraph.match(mathPatterns.mathml) || 
+                          question.paragraph.match(mathPatterns.omml);
+            }
+            
+            if (matches && matches.length > 0) {
+                // إذا وجدت معادلة، انقلها إلى حقل paragraphMath
+                question.paragraphMath = matches[0];
+                // احذف المعادلة من النص الأصلي
+                question.paragraph = question.paragraph.replace(matches[0], '').trim();
             }
         }
+    });
+}
 
-        function saveConfig() {
-            const newTitle = document.getElementById('titleInput').value;
-            const newInstructions = document.getElementById('instructionsInput').value;
-
-            if (newTitle) {
-                quizConfig.title = newTitle;
-                document.getElementById('quizTitle').textContent = newTitle;
-            }
-
-            if (newInstructions) {
-                quizConfig.instructions = newInstructions;
-                document.getElementById('instructions').textContent = newInstructions;
-            }
-
-            toggleConfigPanel();
-        }
-
-        function toArabicNumbers(num) {
-            if (num === undefined || num === null) {
-                return "٠";
-            }
-            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            return num.toString().replace(/\d/g, digit => arabicNumbers[digit]);
-        }
-
-        function updateQuestionCounter() {
-            document.getElementById('questionCounter').textContent =
-                `السؤال ${toArabicNumbers(state.currentQuestion + 1)} من ${toArabicNumbers(state.questions.length)}`;
-        }
-
-        function updateScoreCounter() {
-            document.getElementById('scoreCounter').textContent =
-                `الدرجات: ${toArabicNumbers(state.score)} من ${toArabicNumbers(state.questions.length)}`;
-        }
-
-        function loadQuestionsFromFile() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = function (e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const loadedQuestions = JSON.parse(e.target.result);
-                        state.questions = loadedQuestions;
-                        init();
-                    };
-                    reader.readAsText(file);
+/**
+ * تحميل الأسئلة من ملف
+ */
+function loadQuestionsFromFile() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const loadedQuestions = JSON.parse(e.target.result);
+                    
+                    // معالجة المعادلات الرياضية في الأسئلة المحملة
+                    processEquationsInQuestions(loadedQuestions);
+                    
+                    state.questions = loadedQuestions;
+                    init();
+                } catch (error) {
+                    console.error("خطأ في تحليل ملف JSON:", error);
+                    alert("حدث خطأ في تحليل ملف الأسئلة. يرجى التأكد من صحة تنسيق الملف.");
                 }
             };
-            input.click();
+            reader.readAsText(file);
         }
+    };
+    input.click();
+}
 
-        
+/**
+ * حفظ الأسئلة كملف JSON للاستخدام المحلي
+ */
+function saveQuestionsToFile() {
+    if (!state.questions || state.questions.length === 0) {
+        alert("لا توجد أسئلة لحفظها!");
+        return;
+    }
+    
+    const dataStr = JSON.stringify(state.questions, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = 'quiz_questions.json';
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+}
+
+/**
+ * حفظ التطبيق كاملاً للاستخدام المحلي
+ */
+function saveAppForOfflineUse() {
+    // إنشاء رابط لتنزيل الصفحة الحالية
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], {type: 'text/html'});
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'quiz_app_offline.html';
+    a.click();
+    
+    // تحرير الموارد
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+    }, 100);
+}
 
 window.onload = () => {
-    // ✅ إخفاء النص القرائي عند فتح الصفحة
+    // إخفاء النص القرائي عند فتح الصفحة
     const readingText = document.getElementById('readingText');
     if (readingText) {
         readingText.style.display = 'none';
     }
+    
+    // تعديل زر تحميل الأسئلة الموجود
+    const loadButton = document.getElementById('loadButton');
+    if (loadButton) {
+        loadButton.onclick = loadQuestionsFromFile;
+    }
+    
+    // إضافة الأزرار الإضافية إلى منطقة الأزرار
+    const buttonsContainer = document.querySelector('.buttons-container');
+    
+    // زر حفظ الأسئلة
+    const saveQuestionsButton = document.createElement('button');
+    saveQuestionsButton.id = 'saveQuestionsButton';
+    saveQuestionsButton.textContent = 'حفظ الأسئلة';
+    saveQuestionsButton.className = 'action-btn';
+    saveQuestionsButton.onclick = saveQuestionsToFile;
+    buttonsContainer.appendChild(saveQuestionsButton);
+    
+    // زر حفظ التطبيق للاستخدام المحلي
+    const saveAppButton = document.createElement('button');
+    saveAppButton.id = 'saveAppButton';
+    saveAppButton.textContent = 'حفظ التطبيق';
+    saveAppButton.className = 'action-btn';
+    saveAppButton.style.backgroundColor = '#6c757d';
+    saveAppButton.onclick = saveAppForOfflineUse;
+    buttonsContainer.appendChild(saveAppButton);
 
-    // ✅ زر تحميل الأسئلة
-    const loadButton = document.createElement('button');
-    loadButton.id = 'loadButton';
-    loadButton.textContent = 'تحميل الأسئلة من ملف';
-    loadButton.className = 'nav-btn';
-    loadButton.style.margin = '10px auto';
-    loadButton.style.display = 'block';
-    loadButton.onclick = loadQuestionsFromFile;
-    document.querySelector('.header').appendChild(loadButton);
-
-    // ✅ تحديث العدادات الأولية
-    document.getElementById('questionCounter').innerHTML = `📌 السؤال ٠ من ${toArabicNumbers(state.questions.length)}`;
-    document.getElementById('timer').innerHTML = `⏳ الوقت المتبقي: ${toArabicNumbers(state.timeLeft)} ثانية`;
-    document.getElementById('scoreCounter').innerHTML = `🏆 الدرجات: ٠ من ${toArabicNumbers(state.questions.length)}`;
-    document.getElementById('totalQuestions').textContent = toArabicNumbers(state.questions.length);
+    // تحديث العدادات الأولية
+    document.getElementById('questionCounter').innerHTML = `📌 السؤال ${convertToSelectedNumerals(0)} من ${convertToSelectedNumerals(state.questions.length)}`;
+    document.getElementById('timer').innerHTML = `⏳ الوقت المتبقي: ${convertToSelectedNumerals(state.timeLeft)} ثانية`;
+    document.getElementById('scoreCounter').innerHTML = `🏆 الدرجات: ${convertToSelectedNumerals(0)} من ${convertToSelectedNumerals(state.questions.length)}`;
+    document.getElementById('totalQuestions').textContent = convertToSelectedNumerals(state.questions.length);
+    
+    // تحديث عنوان الكويز
+    document.getElementById('quizTitle').textContent = quizConfig.title;
+    
+    // تحديث قيم الإعدادات
+    document.getElementById('numeralType').value = state.numeralType;
+    document.getElementById('questionTime').value = state.questionTime;
 };
-
-
-    </script>
+</script>
 </body>
 </html>
