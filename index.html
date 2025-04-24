@@ -997,7 +997,7 @@ function showResult() {
 
         quizBox.style.display = 'none';
         scoreBoard.style.display = 'block';
-        buttonsContainer.style.display = 'none';
+        if (buttonsContainer) buttonsContainer.style.display = 'none';
         document.getElementById('readingText').style.display = 'none';
         document.getElementById('countersBox').style.display = 'none';
         document.getElementById('finalScore').textContent = convertToSelectedNumerals(state.score);
