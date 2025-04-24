@@ -1011,7 +1011,8 @@ function restartQuiz() {
     state.answeredQuestions.fill(false);
     document.querySelector('.quiz-box').style.display = 'block';
     document.getElementById('scoreBoard').style.display = 'none';
-    document.querySelector('.buttons-container').style.display = 'flex';
+    const buttonsContainer = document.querySelector('.buttons-container');
+    if (buttonsContainer) buttonsContainer.style.display = 'flex';
     document.getElementById('countersBox').style.display = 'flex';
     document.getElementById('progress').style.width = '0%';
     document.querySelectorAll('.option').forEach(option => {
